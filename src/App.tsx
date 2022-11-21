@@ -16,7 +16,8 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          This is Test.
+          이게 보이면 배포가 잘 되는 것임
         </a>
       </header>
     </div>
