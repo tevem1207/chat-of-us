@@ -1,3 +1,4 @@
+import { getAuth, updateCurrentUser, updateProfile } from "@firebase/auth";
 import { useState, useEffect } from "react";
 import firebase, { User } from "service/firebase";
 
@@ -29,12 +30,32 @@ const useAuth = () => {
       .then(() => handleUser(null));
   };
 
+  const changeName = (newName: string) => {
+    const currentUser = getAuth().currentUser;
+    if (currentUser) {
+      updateProfile(currentUser, {
+        displayName: newName,
+      })
+        .then(() => {
+          console.log(currentUser);
+          currentUser.reload();
+          console.log(currentUser);
+
+          if (currentUser) setUser(currentUser);
+        })
+        .catch((error) => {
+          // An error occurred
+          // ...
+        });
+    }
+  };
+
   useEffect(() => {
     const unsubscribe = firebase.auth().onIdTokenChanged(handleUser);
     return () => unsubscribe();
   }, []);
 
-  return { user, isLoading, signIn, signOut };
+  return { user, isLoading, signIn, signOut, changeName };
 };
 
 export default useAuth;

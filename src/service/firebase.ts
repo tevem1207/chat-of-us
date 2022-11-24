@@ -14,4 +14,4 @@ firebase.initializeApp(firebaseConfig);
 
 export default firebase;
 
-export type User = firebase.User;
+export type User = firebase.UserInfo;
