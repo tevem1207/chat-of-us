@@ -1,20 +1,16 @@
 import { useState, useEffect } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { messagesState } from "store/atom";
+import { sortedMessagesState } from "store/selector";
 import firebase, { User } from "service/firebase";
 import { v4 as uuidv4 } from "uuid";
-
-interface Message {
-  content: string;
-  userId: string;
-  userName: string;
-  createdAt: string;
-}
+import { Message } from "store/interface";
 
 const useChats = (user: User) => {
   const [currentChat, setCurrentChat] = useState<string>("0");
   const [myActiveChats, setMyActiveChats] = useState<string[]>([]);
-  const [currentChatMessages, setCurrentChatMessages] = useState<
-    [string, Message][]
-  >([]);
+  const [, setMessages] = useRecoilState(messagesState);
+  const sortedMessages = useRecoilValue(sortedMessagesState);
 
   useEffect(() => {
     getFromDatabase(`/${user.uid}/chats`, (res) => {
@@ -22,7 +18,7 @@ const useChats = (user: User) => {
     });
 
     getFromDatabase(`/chats/${currentChat}/messages`, (res) => {
-      setCurrentChatMessages(Object.entries(res));
+      setMessages(Object.values(res));
     });
   }, [currentChat, user]);
 
@@ -49,7 +45,7 @@ const useChats = (user: User) => {
     createChat,
     currentChat,
     myActiveChats,
-    currentChatMessages,
+    sortedMessages,
     setCurrentChat,
   };
 };

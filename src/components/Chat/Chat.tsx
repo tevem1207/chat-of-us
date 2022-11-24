@@ -13,16 +13,18 @@ function Chat({ user }: ChatProps) {
     createChat,
     currentChat,
     myActiveChats,
-    currentChatMessages,
+    sortedMessages,
     setCurrentChat,
   } = useChats(user);
 
   return (
     <div>
       <div className="messages-container">
-        {currentChatMessages.map((message) => (
-          <div key={message[0]}>
-            {message[1].userName} : {message[1].content}
+        {sortedMessages.map((message, index) => (
+          <div key={index}>
+            <p>
+              {message.userName} : {message.content}
+            </p>
           </div>
         ))}
       </div>

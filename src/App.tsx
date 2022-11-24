@@ -5,11 +5,16 @@ import Auth from "components/Auth/Auth";
 import Chat from "components/Chat/Chat";
 
 function App() {
-  const { user, signIn, signOut } = useAuth();
+  const { user, signIn, signOut, changeName } = useAuth();
 
   return (
     <div className="App">
-      <Auth user={user} signIn={signIn} signOut={signOut} />
+      <Auth
+        user={user}
+        signIn={signIn}
+        signOut={signOut}
+        changeName={changeName}
+      />
       {user && <Chat user={user} />}
     </div>
   );
