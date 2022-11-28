@@ -12,8 +12,8 @@ function Auth({ user, signIn, signOut, changeName }: AuthProps) {
   const [newName, setNewName] = useState("");
 
   return (
-    <div>
-      <div>{user && user.displayName}</div>
+    <div className="auth">
+      <div>지금 나는... "{user && user.displayName}"</div>
       {user ? (
         <>
           <input
