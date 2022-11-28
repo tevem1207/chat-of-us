@@ -1,5 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 import "App.scss";
+import "./components/Chat/chat.scss";
 import useAuth from "hooks/useAuth";
 import Auth from "components/Auth/Auth";
 import Chat from "components/Chat/Chat";
