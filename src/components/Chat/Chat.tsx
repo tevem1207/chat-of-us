@@ -14,6 +14,7 @@ function Chat({ user }: ChatProps) {
     myActiveChats,
     sortedMessages,
     currentChat,
+    chatLists,
   } = useChats(user);
 
   return (

@@ -15,3 +15,4 @@ firebase.initializeApp(firebaseConfig);
 export default firebase;
 
 export type User = firebase.UserInfo;
+export type eventType = firebase.database.EventType;

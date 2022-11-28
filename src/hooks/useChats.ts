@@ -3,12 +3,13 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { useSearchParams } from "react-router-dom";
 import { messagesState } from "store/atom";
 import { sortedMessagesState } from "store/selector";
-import firebase, { User } from "service/firebase";
+import firebase, { User, eventType } from "service/firebase";
 import { v4 as uuidv4 } from "uuid";
 import { Message } from "store/interface";
 
 const useChats = (user: User) => {
   const [myActiveChats, setMyActiveChats] = useState<string[]>([]);
+  const [chatLists, setChatLists] = useState<string[]>([]);
   const [, setMessages] = useRecoilState(messagesState);
   const sortedMessages = useRecoilValue(sortedMessagesState);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,13 +17,16 @@ const useChats = (user: User) => {
   const currentChat = roomId ? roomId : "0";
 
   useEffect(() => {
-    console.log(currentChat);
-    getFromDatabase(`/${user.uid}/chats`, (res) => {
+    getFromDatabase("/chats", "value", (res) => {
+      setChatLists(Object.keys(res));
+    });
+
+    getFromDatabase(`/${user.uid}/chats`, "value", (res) => {
       setMyActiveChats(Object.keys(res));
     });
 
     console.log("Get");
-    getFromDatabase(`/chats/${currentChat}/messages`, (res) => {
+    getFromDatabase(`/chats/${currentChat}/messages`, "value", (res) => {
       setMessages(Object.values(res));
     });
   }, [user, currentChat]);
@@ -51,12 +55,13 @@ const useChats = (user: User) => {
     currentChat,
     myActiveChats,
     sortedMessages,
-    // setCurrentChat,
+    chatLists,
   };
 };
 
 const getFromDatabase = (
   dbString: string,
+  method: eventType,
   callback: (data: { [chatId: string]: Message }) => void
 ) => {
   const ref = firebase.database().ref(dbString);
