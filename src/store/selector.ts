@@ -5,7 +5,6 @@ export const sortedMessagesState = selector({
   key: "sortedMessagesState", // unique ID (with respect to other atoms/selectors)
   get: ({ get }) => {
     const messages = get(messagesState);
-    console.log(messages);
 
     return messages
       .slice()

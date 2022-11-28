@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { useSearchParams } from "react-router-dom";
 import { messagesState } from "store/atom";
 import { sortedMessagesState } from "store/selector";
 import firebase, { User } from "service/firebase";
@@ -7,20 +8,24 @@ import { v4 as uuidv4 } from "uuid";
 import { Message } from "store/interface";
 
 const useChats = (user: User) => {
-  const [currentChat, setCurrentChat] = useState<string>("0");
   const [myActiveChats, setMyActiveChats] = useState<string[]>([]);
   const [, setMessages] = useRecoilState(messagesState);
   const sortedMessages = useRecoilValue(sortedMessagesState);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const roomId = searchParams.get("roomId");
+  const currentChat = roomId ? roomId : "0";
 
   useEffect(() => {
+    console.log(currentChat);
     getFromDatabase(`/${user.uid}/chats`, (res) => {
       setMyActiveChats(Object.keys(res));
     });
 
+    console.log("Get");
     getFromDatabase(`/chats/${currentChat}/messages`, (res) => {
       setMessages(Object.values(res));
     });
-  }, [currentChat, user]);
+  }, [user, currentChat]);
 
   const sendMessage = (chatName: string, content: string) => {
     const messageId = uuidv4();
@@ -32,12 +37,12 @@ const useChats = (user: User) => {
     });
   };
 
-  const createChat = (recipient: string, chatName: string) => {
-    const fullChatName = `${chatName}-${uuidv4()}`;
-    saveToDatabase(`/${recipient}/chats/${fullChatName}`, fullChatName);
+  const createChat = () => {
+    const fullChatName = `${uuidv4()}`;
+    // saveToDatabase(`/${recipient}/chats/${fullChatName}`, fullChatName);
     saveToDatabase(`/${user.uid}/chats/${fullChatName}`, fullChatName);
     saveToDatabase(`/chats/${fullChatName}/messages`, {} as Message);
-    setCurrentChat(fullChatName);
+    setSearchParams({ roomId: fullChatName });
   };
 
   return {
@@ -46,7 +51,7 @@ const useChats = (user: User) => {
     currentChat,
     myActiveChats,
     sortedMessages,
-    setCurrentChat,
+    // setCurrentChat,
   };
 };
 
@@ -58,11 +63,14 @@ const getFromDatabase = (
   ref.on("value", (snapshot) => {
     if (snapshot.val()) {
       callback(snapshot.val());
+    } else {
+      callback({});
     }
   });
 };
 
 const saveToDatabase = (dbString: string, value: Message | string) => {
+  console.log(dbString, value);
   firebase.database().ref(dbString).set(value);
 };
 

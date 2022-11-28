@@ -1,4 +1,4 @@
-import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import "App.scss";
 import useAuth from "hooks/useAuth";
 import Auth from "components/Auth/Auth";
@@ -8,15 +8,17 @@ function App() {
   const { user, signIn, signOut, changeName } = useAuth();
 
   return (
-    <div className="App">
-      <Auth
-        user={user}
-        signIn={signIn}
-        signOut={signOut}
-        changeName={changeName}
-      />
-      {user && <Chat user={user} />}
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Auth
+          user={user}
+          signIn={signIn}
+          signOut={signOut}
+          changeName={changeName}
+        />
+        {user && <Chat user={user} />}
+      </div>
+    </BrowserRouter>
   );
 }
 

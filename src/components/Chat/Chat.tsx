@@ -11,14 +11,14 @@ function Chat({ user }: ChatProps) {
   const {
     sendMessage,
     createChat,
-    currentChat,
     myActiveChats,
     sortedMessages,
-    setCurrentChat,
+    currentChat,
   } = useChats(user);
 
   return (
     <div>
+      <button onClick={createChat}>채팅방 만들기</button>
       <div className="messages-container">
         {sortedMessages.map((message, index) => (
           <div key={index}>
