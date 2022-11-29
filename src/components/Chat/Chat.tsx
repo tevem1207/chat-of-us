@@ -67,7 +67,7 @@ function Chat({ user }: ChatProps) {
             <div className="message-content">
               <p className="chat-user">{message.userName}</p>
               <div className="message-balloon">
-                <span className="chat-content">{message.content}</span>
+                <pre className="chat-content">{message.content}</pre>
               </div>
             </div>
           </div>
