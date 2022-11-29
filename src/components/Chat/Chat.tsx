@@ -9,6 +9,9 @@ interface ChatProps {
 
 function Chat({ user }: ChatProps) {
   const [messageBody, setMessageBody] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const messagesRef = useRef<HTMLDivElement>(null);
+
   const {
     sendMessage,
     createChat,
@@ -17,37 +20,28 @@ function Chat({ user }: ChatProps) {
     currentChat,
     chatLists,
   } = useChats(user);
-  const messagesRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const line1Ref = useRef<HTMLSpanElement>(null);
-  const line2Ref = useRef<HTMLSpanElement>(null);
-  const chatRef = useRef<HTMLSpanElement>(null);
 
-  useEffect(() => {
+  const onEnterPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (
-      line1Ref.current !== null &&
-      line2Ref.current !== null &&
-      chatRef.current !== null
+      event.code == "Enter" &&
+      event.shiftKey == false &&
+      event.nativeEvent.isComposing === false
     ) {
-      var chatHeight = chatRef.current.style.height;
-      console.log(chatHeight);
-      line1Ref.current.style.height = chatHeight;
-      line2Ref.current.style.height = chatHeight;
-    }
-  }, []);
-
-  useEffect(() => {
-    messagesRef.current?.scrollIntoView(false);
-  }, [sortedMessages]);
-
-  const onEnterPress = (event: any) => {
-    if (event.keyCode == 13 && event.shiftKey == false) {
       event.preventDefault();
       messageBody
         ? sendMessage(currentChat, messageBody)
         : alert("내용을 입력하세요...ㅠㅠ 제발요...");
       setMessageBody("");
     }
+  };
+
+  useEffect(() => {
+    messagesRef.current?.lastElementChild?.scrollIntoView(false);
+  }, [sortedMessages]);
+
+  const scrollCallBack = (event: Event) => {
+    // console.log(event);
+    // console.log("스크롤중");
   };
 
   // const resizeTextareaHandler = () => {
@@ -73,15 +67,7 @@ function Chat({ user }: ChatProps) {
             <div className="message-content">
               <p className="chat-user">{message.userName}</p>
               <div className="message-balloon">
-                {/* <span ref={line1Ref} className="line-1"></span> */}
-                <span ref={line2Ref} className="line-2"></span>
-                <span ref={line2Ref} className="line-3"></span>
-                <span ref={chatRef} className="chat-content">
-                  {message.content}
-                </span>
-                <span ref={line2Ref} className="line-3"></span>
-                <span ref={line2Ref} className="line-2"></span>
-                {/* <span ref={line1Ref} className="line-1"></span> */}
+                <span className="chat-content">{message.content}</span>
               </div>
             </div>
           </div>
@@ -90,11 +76,9 @@ function Chat({ user }: ChatProps) {
       <div className="send-message">
         <textarea
           className="message-input"
-          ref={textareaRef}
           value={messageBody}
           onChange={(event) => {
             setMessageBody(event.target.value);
-            // resizeTextareaHandler();
           }}
           onKeyDown={onEnterPress}
         />
