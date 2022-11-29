@@ -23,8 +23,8 @@ function Chat({ user }: ChatProps) {
 
   const onEnterPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (
-      event.code == "Enter" &&
-      event.shiftKey == false &&
+      event.code === "Enter" &&
+      event.shiftKey === false &&
       event.nativeEvent.isComposing === false
     ) {
       event.preventDefault();
