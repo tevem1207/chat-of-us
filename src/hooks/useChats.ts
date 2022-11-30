@@ -5,7 +5,7 @@ import { messagesState } from "store/atom";
 import { sortedMessagesState } from "store/selector";
 import firebase, { User, eventType } from "service/firebase";
 import { v4 as uuidv4 } from "uuid";
-import { Message } from "store/interface";
+import { MessageType } from "store/interface";
 
 const useChats = (user: User) => {
   const [myActiveChats, setMyActiveChats] = useState<string[]>([]);
@@ -45,7 +45,7 @@ const useChats = (user: User) => {
     const fullChatName = `${uuidv4()}`;
     // saveToDatabase(`/${recipient}/chats/${fullChatName}`, fullChatName);
     saveToDatabase(`/${user.uid}/chats/${fullChatName}`, fullChatName);
-    saveToDatabase(`/chats/${fullChatName}/messages`, {} as Message);
+    saveToDatabase(`/chats/${fullChatName}/messages`, {} as MessageType);
     setSearchParams({ roomId: fullChatName });
   };
 
@@ -62,7 +62,7 @@ const useChats = (user: User) => {
 const getFromDatabase = (
   dbString: string,
   method: eventType,
-  callback: (data: { [chatId: string]: Message }) => void
+  callback: (data: { [chatId: string]: MessageType }) => void
 ) => {
   const ref = firebase.database().ref(dbString);
   ref.on("value", (snapshot) => {
@@ -74,7 +74,7 @@ const getFromDatabase = (
   });
 };
 
-const saveToDatabase = (dbString: string, value: Message | string) => {
+const saveToDatabase = (dbString: string, value: MessageType | string) => {
   console.log(dbString, value);
   firebase.database().ref(dbString).set(value);
 };

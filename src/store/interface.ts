@@ -1,4 +1,4 @@
-export interface Message {
+export interface MessageType {
   content: string;
   userId: string;
   userName: string;

@@ -30,6 +30,13 @@
       flex-direction: row;
       align-items: center;
 
+      &.mine {
+        justify-content: flex-end;
+        .message-balloon {
+          justify-content: flex-end;
+        }
+      }
+
       .user-profile {
         margin: 0 5px 0 5px;
         width: 40px;
