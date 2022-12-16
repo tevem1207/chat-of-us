@@ -72,3 +72,5 @@ sketch
 # End of https://www.toptal.com/developers/gitignore/api/react,firebase,visualstudiocode
 
 .env
+
+public/firebase-messaging-sw.js
