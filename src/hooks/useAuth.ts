@@ -37,10 +37,7 @@ const useAuth = () => {
         displayName: newName,
       })
         .then(() => {
-          console.log(currentUser);
           currentUser.reload();
-          console.log(currentUser);
-
           if (currentUser) setUser(currentUser);
         })
         .catch((error) => {

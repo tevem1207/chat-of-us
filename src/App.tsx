@@ -8,7 +8,7 @@ import Chat from "components/Chat/Chat";
 
 function App() {
   const { user, signIn, signOut, changeName } = useAuth();
-  const cloudMessage = useCloudMessage();
+  const cloudMessage = useCloudMessage(user);
 
   return (
     <BrowserRouter>

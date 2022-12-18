@@ -25,7 +25,6 @@ const useChats = (user: User) => {
       setMyActiveChats(Object.keys(res));
     });
 
-    console.log("Get");
     getFromDatabase(`/chats/${currentChat}/messages`, "value", (res) => {
       setMessages(Object.values(res));
     });
