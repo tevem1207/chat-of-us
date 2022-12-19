@@ -8,7 +8,7 @@ import Chat from "components/Chat/Chat";
 
 function App() {
   const { user, signIn, signOut, changeName } = useAuth();
-  const cloudMessage = useCloudMessage(user);
+  const { sendCloudMessage } = useCloudMessage(user);
 
   return (
     <BrowserRouter>
@@ -19,6 +19,7 @@ function App() {
           signOut={signOut}
           changeName={changeName}
         />
+        <button onClick={() => sendCloudMessage("테스트...")}>test</button>
         {user && <Chat user={user} />}
       </div>
     </BrowserRouter>

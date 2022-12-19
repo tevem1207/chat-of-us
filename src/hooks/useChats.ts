@@ -74,7 +74,6 @@ const getFromDatabase = (
 };
 
 const saveToDatabase = (dbString: string, value: MessageType | string) => {
-  console.log(dbString, value);
   firebase.database().ref(dbString).set(value);
 };
 
