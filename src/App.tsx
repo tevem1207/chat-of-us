@@ -19,8 +19,7 @@ function App() {
           signOut={signOut}
           changeName={changeName}
         />
-        <button onClick={() => sendCloudMessage("테스트...")}>test</button>
-        {user && <Chat user={user} />}
+        {user && <Chat user={user} sendCloudMessage={sendCloudMessage} />}
       </div>
     </BrowserRouter>
   );

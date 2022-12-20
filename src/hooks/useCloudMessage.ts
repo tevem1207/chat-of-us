@@ -44,7 +44,7 @@ const useCloudMessage = (user: User | null) => {
               const data = {
                 notification: {
                   body: message,
-                  title: "메세지가 도착했습니다.",
+                  title: user.displayName,
                 },
                 to: token,
               };

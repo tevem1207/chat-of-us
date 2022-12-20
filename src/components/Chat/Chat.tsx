@@ -7,9 +7,10 @@ import MyMessage from "./MyMessage";
 
 interface ChatProps {
   user: User;
+  sendCloudMessage: (message: string) => void;
 }
 
-function Chat({ user }: ChatProps) {
+function Chat({ user, sendCloudMessage }: ChatProps) {
   const [messageBody, setMessageBody] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const messagesRef = useRef<HTMLDivElement>(null);
@@ -30,10 +31,17 @@ function Chat({ user }: ChatProps) {
       event.nativeEvent.isComposing === false
     ) {
       event.preventDefault();
-      messageBody
-        ? sendMessage(currentChat, messageBody)
-        : alert("내용을 입력하세요...ㅠㅠ 제발요...");
+      sendMessageAll();
       setMessageBody("");
+    }
+  };
+
+  const sendMessageAll = () => {
+    if (messageBody) {
+      sendMessage(currentChat, messageBody);
+      sendCloudMessage(messageBody);
+    } else {
+      alert("내용을 입력하세요...ㅠㅠ 제발요...");
     }
   };
 
@@ -82,9 +90,7 @@ function Chat({ user }: ChatProps) {
         />
         <button
           onClick={() => {
-            messageBody
-              ? sendMessage(currentChat, messageBody)
-              : alert("내용을 입력하세요...ㅠㅠ 제발요...");
+            sendMessageAll();
             setMessageBody("");
           }}
         >
