@@ -1,6 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import "App.scss";
 import "./components/Chat/chat.scss";
+import "./components/Auth/auth.scss";
 import useAuth from "hooks/useAuth";
 import useCloudMessage from "hooks/useCloudMessage";
 import Auth from "components/Auth/Auth";

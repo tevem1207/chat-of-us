@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .chatroom-title {
+    margin-left: 20px;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .menu-icon {
+    margin-right: 10px;
+    width: 60px;
+    height: 60px;
+
+    img {
+      margin-top: 10px;
+      width: 40px;
+    }
+  }
+}
+
+.side-menu {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0);
+  transition: all ease 0.4s;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+
+  &.close {
+    left: 100vw;
+  }
+  &.open {
+    background-color: rgba(0, 0, 0, 0.5);
+    left: 0;
+  }
+
+  .menu-inner {
+    margin-left: 10vw;
+    width: 90vw;
+    height: 100vh;
+    background-color: var(--main-color);
+  }
+}

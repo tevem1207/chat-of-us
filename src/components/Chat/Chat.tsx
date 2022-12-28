@@ -69,7 +69,7 @@ function Chat({ user, sendCloudMessage }: ChatProps) {
 
   return (
     <div className="chat-room">
-      <button onClick={createChat}>채팅방 만들기</button>
+      {/* <button onClick={createChat}>채팅방 만들기</button> */}
       <div className="messages-container" ref={messagesRef}>
         {sortedMessages.map((message, index) =>
           user.uid === message.userId ? (
@@ -88,14 +88,15 @@ function Chat({ user, sendCloudMessage }: ChatProps) {
           }}
           onKeyDown={onEnterPress}
         />
-        <button
+        <div
+          className={messageBody ? "submit-btn filled" : "submit-btn"}
           onClick={() => {
             sendMessageAll();
             setMessageBody("");
           }}
         >
           보내기
-        </button>
+        </div>
       </div>
     </div>
   );
