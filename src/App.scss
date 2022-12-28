@@ -1,11 +1,16 @@
+:root {
+  --main-color: rgb(177, 207, 247);
+}
+
 .App {
   text-align: center;
-  // display: flex;
-  // flex-direction: column;
+  overflow: hidden;
 }
 
 .auth {
   height: 60px;
+  background-color: var(--main-color);
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 480px) {
@@ -18,7 +23,7 @@
   .App {
     width: 480px;
     height: 100vh;
-    background-color: rgb(177, 207, 247);
+    background-color: var(--main-color);
     overflow: auto;
     position: relative;
   }
@@ -39,13 +44,15 @@
   .App {
     width: 100%;
     height: 100vh;
-    background-color: #efe;
+    background-color: var(--main-color);
     position: relative;
   }
 
   .auth {
     width: 100vw;
-    top: 0;
-    left: 0;
+    position: fixed;
+    z-index: 100;
+    // top: 0;
+    // left: 0;
   }
 }
