@@ -45,6 +45,7 @@ const useCloudMessage = (user: User | null) => {
                 notification: {
                   body: message,
                   title: user.displayName,
+                  link: "https://chat-of-us.web.app",
                 },
                 to: token,
               };
