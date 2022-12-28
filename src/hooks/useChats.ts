@@ -32,11 +32,14 @@ const useChats = (user: User) => {
 
   const sendMessage = (chatName: string, content: string) => {
     const messageId = uuidv4();
+    var d = new Date();
     saveToDatabase(`/chats/${chatName}/messages/${messageId}`, {
       content: content,
       userId: user.uid,
       userName: user.displayName ? user.displayName : "이름 없음",
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(
+        d.getTime() - d.getTimezoneOffset() * 60000
+      ).toISOString(),
     });
   };
 
